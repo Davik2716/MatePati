@@ -6,13 +6,8 @@
 body {
     background-color: black;
     color: white;
-    /* font-family: 'Roboto'; */
     font-family: sans-serif;
 }
-
-/* p {
-    text-decoration-line: underline;
-} */
 
 input[type=number] {
     text-align: center;
@@ -45,8 +40,6 @@ input[type=button] {
 
 .contenedor {
     width: 90%;
-    /* height: 90%; */
-    /* max-width: 1000px; */
     margin: 15px auto;
     display: grid;
     grid-gap: 10px;
