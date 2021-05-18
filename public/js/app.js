@@ -105,7 +105,7 @@ function iniciar() {
         llenarCon0()
 
         // revisar las respuestas
-        var mi_nota = 0
+        var mi_nota = 0;
         switch (operacion.value) {
             case "+":
                 // sumar
