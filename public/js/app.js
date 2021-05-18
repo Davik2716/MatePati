@@ -4,7 +4,7 @@ function iniciar() {
 
     // cargar los valores de <p> <input>
     var array_p = document.getElementsByTagName("p")
-    var array_input = document.getElementsByTagName("input")
+    var array_respuestas = document.getElementsByClassName("respuestas")
 
     // leer la configuracion
     var operacion = document.getElementById("operacion");
@@ -25,7 +25,15 @@ function iniciar() {
 
         // repintar de blanco los campos
         for (let index = 0; index < 20; index++) {
-            array_input[index].style.background = "white";
+            array_respuestas[index].style.background = "white";
+        }
+
+        // quitar los botones de llevar de la suma
+        var list = document.getElementsByClassName("crear");
+        for (let x = 0; x < 20; x++) {
+            while (list[x].hasChildNodes()) {
+                list[x].removeChild(list[x].childNodes[0]);
+            }
         }
 
         // generar los números random
@@ -53,7 +61,21 @@ function iniciar() {
         // según la operación
         switch (operacion.value) {
             case "+":
-                // no es necesario hacer nada
+                // agregar el botón para llevar uno al sumar
+                for (let index = 0; index < 20; index++) {
+
+                    for (let i = 0; i < numeros.value; i++) {
+                        var carry = document.createElement("input")
+                        carry.type = "button"
+                        carry.className = "llevar"
+                        carry.id = index + "-" + i
+                        carry.value = " "
+                        carry.setAttribute("onclick", "llevar1('" + index + "-" + i + "');")
+
+                        // crear el botón que lleva la suma
+                        document.getElementsByClassName("crear")[index].appendChild(carry)
+                    }
+                }
                 break;
 
             default:
@@ -79,11 +101,11 @@ function iniciar() {
                     suma = suma + Math.floor(array_p[(index * 3 + 1)].textContent)
 
                     // pintar las cajas según sea correcto o incorrecto
-                    if (array_input[index].value == suma) {
-                        array_input[index].style.background = "green";
+                    if (array_respuestas[index].value == suma) {
+                        array_respuestas[index].style.background = "green";
                         mi_nota++
                     } else {
-                        array_input[index].style.background = "red";
+                        array_respuestas[index].style.background = "red";
                     }
 
                 }
@@ -115,27 +137,35 @@ function guiones(cantidad) {
 }
 
 function llenarCon0() {
-    var array_input = document.getElementsByTagName("input")
+    var array_respuestas = document.getElementsByClassName("respuestas")
     for (let index = 0; index < 20; index++) {
-        if (array_input[index].value == "") {
-            array_input[index].value = 0
+        if (array_respuestas[index].value == "") {
+            array_respuestas[index].value = 0
         }
     }
 }
 
 function limpiarCampos() {
-    var array_input = document.getElementsByTagName("input")
+    var array_respuestas = document.getElementsByClassName("respuestas")
     for (let index = 0; index < 20; index++) {
-        array_input[index].value = ""
+        array_respuestas[index].value = ""
     }
 }
 
-function contador(inicio) {
-    setInterval(function () {
-        var time = document.getElementById("tiempo");
-        time.innerHTML = inicio;
-        if (document.getElementById("boton").value == "Terminar") {
-            inicio++;
-        }
-    }, 1000);
+function llevar1(id) {
+    var actual = document.getElementById(id).value
+    if (actual == " ") {
+        document.getElementById(id).value = "1"
+    } else {
+        document.getElementById(id).value = " "
+    }
 }
+// function contador(inicio) {
+//     setInterval(function () {
+//         var time = document.getElementById("tiempo");
+//         time.innerHTML = inicio;
+//         if (document.getElementById("boton").value == "Terminar") {
+//             inicio++;
+//         }
+//     }, 1000);
+// }
