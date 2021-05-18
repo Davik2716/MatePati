@@ -26,6 +26,7 @@ function iniciar() {
         // repintar de blanco los campos
         for (let index = 0; index < 20; index++) {
             array_respuestas[index].style.background = "white";
+            array_respuestas[index].style.color = "black";
         }
 
         // quitar los botones de llevar de la suma
@@ -43,7 +44,7 @@ function iniciar() {
         var guion = guiones(numeros.value)
 
         // llenar los valores de <p>
-        for (let index = 0; index < array_p.length; index++) { // array_p.length = 20
+        for (let index = 0; index < 60; index++) {
             var ran = aleatorio(gen)
 
             // aumentar el valor si se genero muy bajo
@@ -77,7 +78,18 @@ function iniciar() {
                     }
                 }
                 break;
+            case "-":
+                // ordenar el mayor primero
+                for (let index = 0; index < 60; index = index + 3) {
+                    var a = Math.floor(array_p[index].textContent)
+                    var b = Math.floor(array_p[index + 1].textContent)
 
+                    if (a < b) {
+                        array_p[index].textContent = b
+                        array_p[index + 1].textContent = a
+                    }
+                }
+                break;
             default:
                 break;
         }
@@ -96,6 +108,7 @@ function iniciar() {
         var mi_nota = 0
         switch (operacion.value) {
             case "+":
+                // sumar
                 for (let index = 0; index < 20; index++) {
                     var suma = Math.floor(array_p[(index * 3)].textContent)
                     suma = suma + Math.floor(array_p[(index * 3 + 1)].textContent)
@@ -107,10 +120,25 @@ function iniciar() {
                     } else {
                         array_respuestas[index].style.background = "red";
                     }
-
+                    array_respuestas[index].style.color = "white";
                 }
                 break;
+            case "-":
+                // restar
+                for (let index = 0; index < 20; index++) {
+                    var resta = Math.floor(array_p[(index * 3)].textContent)
+                    resta = resta - Math.floor(array_p[(index * 3 + 1)].textContent)
 
+                    // pintar las cajas según sea correcto o incorrecto
+                    if (array_respuestas[index].value == resta) {
+                        array_respuestas[index].style.background = "green";
+                        mi_nota++
+                    } else {
+                        array_respuestas[index].style.background = "red";
+                    }
+                    array_respuestas[index].style.color = "white";
+                }
+                break;
             default:
                 break;
         }
@@ -160,12 +188,59 @@ function llevar1(id) {
         document.getElementById(id).value = " "
     }
 }
-// function contador(inicio) {
-//     setInterval(function () {
-//         var time = document.getElementById("tiempo");
-//         time.innerHTML = inicio;
-//         if (document.getElementById("boton").value == "Terminar") {
-//             inicio++;
-//         }
-//     }, 1000);
-// }
+
+function pos0(id) {
+    var div = document.getElementById(id)
+    doSetCaretPosition(div, 0)
+}
+
+function doGetCaretPosition(oField) {
+    // Initialize
+    var iCaretPos = 0;
+
+    // IE Support
+    if (document.selection) {
+        // Set focus on the element
+        oField.focus();
+
+        // To get cursor position, get empty selection range
+        var oSel = document.selection.createRange();
+
+        // Move selection start to 0 position
+        oSel.moveStart('character', -oField.value.length);
+
+        // The caret position is selection length
+        iCaretPos = oSel.text.length;
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0')
+        iCaretPos = oField.selectionStart;
+
+    // Return results
+    return (iCaretPos);
+}
+
+function doSetCaretPosition(oField, iCaretPos) {
+    // IE Support
+    if (document.selection) {
+        // Set focus on the element
+        oField.focus();
+
+        // Create empty selection range
+        var oSel = document.selection.createRange();
+
+        // Move selection start and end to 0 position
+        oSel.moveStart('character', -oField.value.length);
+
+        // Move selection start and end to desired position
+        oSel.moveStart('character', iCaretPos);
+        oSel.moveEnd('character', 0);
+        oSel.select();
+    }
+    // Firefox support
+    else if (oField.selectionStart || oField.selectionStart == '0') {
+        oField.selectionStart = iCaretPos;
+        oField.selectionEnd = iCaretPos;
+        oField.focus();
+    }
+}

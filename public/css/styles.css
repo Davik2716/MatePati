@@ -9,7 +9,7 @@ body {
     font-family: sans-serif;
 }
 
-input[type=number] {
+input[type=number], input[type=text] {
     text-align: center;
     font-size: 20px;
     max-width: 50px;
@@ -19,8 +19,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     -webkit-appearance: none;
     margin: 0;
 }
-
-/* input[type=button] { */
 
 #boton {
     background-color: darkgreen;
@@ -39,7 +37,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     min-height: 100px;
 }
 
-.llevar{
+.llevar {
     font-weight: bold;
     font-size: 15px;
     min-height: 20px;
